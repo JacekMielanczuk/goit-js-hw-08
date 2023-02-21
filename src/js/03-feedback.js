@@ -18,7 +18,7 @@ function onFormSubmit(event) {
   const finalData = {};
   for (const [key, value] of formData.entries()) {
     if (!value) {
-      alert('Все поля должны быть заполнены!!');
+      alert();
       return;
     }
     finalData[key] = value;
