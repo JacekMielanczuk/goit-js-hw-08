@@ -5,31 +5,29 @@ import '../css/01-gallery.css';
 // Add imports above this line
 import { galleryItems } from './gallery-items';
 // Change code below this line
-const galleryContainer = document.querySelector('.gallery');
-const imageMarkup = createItemsMarkup(galleryItems);
-galleryContainer.insertAdjacentHTML('beforeend', imageMarkup);
+const createItemsMarkup = galleryItems
+  .map(({ preview, original, description }) => {
+    return `
+    <a class="gallery__item" href="${original}">
+    <img class="gallery__image" src="${preview}" alt="${description}" />
+  </a>
+      `;
+  })
+  .join('');
 
-function createItemsMarkup(image) {
-  return galleryItems
-    .map(({ preview, original, description }) => {
-      return `<div class="gallery">
-<li>
-<a class="gallery__item" href="${original}">
-<img 
-class="gallery__image"
-src="${preview}"
-alt="${description}"
-/>
-</a>
-</li>
-</div>`;
-    })
-    .join('');
-}
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
+const alleryContainerEl = document.querySelector('.gallery');
+alleryContainerEl.insertAdjacentHTML('beforeend', createItemsMarkup);
+let lightbox = new SimpleLightbox('.gallery a', {
+  scrollZoom: false,
   captionDelay: 250,
-  captionType: 'alt',
+  captionsData: 'alt',
+  doubleTapZoom: 1,
+});
+alleryContainerEl.addEventListener('click', event => {
+  event.preventDefault();
+  if (!event.target.classList.contains('gallery__image')) {
+    return;
+  }
 });
 
 console.log(galleryItems);
