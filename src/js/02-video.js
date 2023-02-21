@@ -11,3 +11,24 @@ const onPlay = function (data) {
   localStorage.setItem(TIME_KEY, stringfyData);
 };
 player.on('timeupdate', throttle(onPlay, 1000));
+
+function resumePlayback() {
+  if (JSON.parse(localStorage.getItem(TIME_KEY)) === null) {
+    return;
+  }
+  const paused = JSON.parse(localStorage.getItem(TIME_KEY))['seconds'];
+  if (paused) {
+    player
+      .setCurrentTime(paused)
+      .then(function (seconds) {})
+      .cath(function (error) {
+        switch (error.name) {
+          case 'Error':
+            break;
+          default:
+            break;
+        }
+      });
+  }
+}
+resumePlayback();
