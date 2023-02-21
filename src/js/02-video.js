@@ -7,8 +7,8 @@ const iframe = document.querySelector('iframe');
 const player = new Vimeo.Player(iframe);
 
 const onPlay = function (data) {
-  const stringfyData = JSON.stringify(data);
-  localStorage.setItem(TIME_KEY, stringfyData);
+  const strigifyData = JSON.stringify(data);
+  localStorage.setItem(TIME_KEY, strigifyData);
 };
 player.on('timeupdate', throttle(onPlay, 1000));
 
@@ -21,7 +21,7 @@ function resumePlayback() {
     player
       .setCurrentTime(paused)
       .then(function (seconds) {})
-      .cath(function (error) {
+      .catch(function (error) {
         switch (error.name) {
           case 'Error':
             break;
